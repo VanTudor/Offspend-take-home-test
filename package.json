@@ -11,14 +11,22 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "test": "jest",
-    "start": "babel-node index.js"
+    "build-test-skip-check": "babel ./src --out-dir lib --extensions .ts --copy-files --source-maps",
+    "build-prod-skip-check": "babel ./src --out-dir lib --extensions \".ts,.json\"  --ignore '**/*.test.ts'",
+    "build-test": "tsc",
+    "build-prod": "tsc",
+    "start": "babel-node ./lib/index.js",
+    "test": "yarn build-test-skip-check && jest"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.0",
     "@babel/core": "^7.1.0",
     "@babel/node": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.10.1",
     "@babel/preset-env": "^7.1.0",
+    "@babel/preset-typescript": "^7.10.1",
+    "@types/jest": "^26.0.0",
+    "@types/node": "^14.0.13",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^9.0.0",
     "babel-jest": "^23.6.0",
@@ -27,6 +35,19 @@
     "eslint-plugin-prettier": "^2.6.2",
     "jest": "24.8.0",
     "prettier": "^1.14.3",
-    "regenerator-runtime": "^0.12.1"
+    "tslint": "^6.1.2",
+    "typescript": "^3.9.5"
+  },
+  "moduleFileExtensions": [
+    "js",
+    "json"
+  ],
+  "jest": {
+    "testRegex": [
+      "lib/tests/.*\\.(spec|test)\\.[tj]sx?$"
+    ]
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.10.2"
   }
 }

@@ -1,16 +1,11 @@
-export class DiscountOffer {
-  constructor(partnerName, expiresIn, discountRateInPercent) {
-    this.partnerName = partnerName;
-    this.expiresIn = expiresIn;
-    this.discountInPercent = discountRateInPercent;
-  }
-}
+import { DiscountOffer } from "./discountOffer";
 
 export class Store {
-  constructor(discountOffers = []) {
+  constructor(private discountOffers: DiscountOffer[] = []) {
     this.discountOffers = discountOffers;
   }
-  updateDiscounts() {
+
+  public updateDiscounts(): DiscountOffer[] {
     for (var i = 0; i < this.discountOffers.length; i++) {
       if (
         this.discountOffers[i].partnerName != "Naturalia" &&
