@@ -1,4 +1,4 @@
-import { simulate30Days, writeSimulationResult } from "./simulate";
+import { simulate30DaysOldDiscounts, writeSimulationResult } from "./simulate";
 
-const simResult = simulate30Days();
+const simResult = simulate30DaysOldDiscounts();
 writeSimulationResult(simResult);
