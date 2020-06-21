@@ -29,7 +29,7 @@ export class Store {
     [EPartners.ILEK]: true,
   };
 
-  constructor(private discountOffers: DiscountOffer[] = []) {
+  constructor(public discountOffers: DiscountOffer[] = []) {
     this.discountOffers = discountOffers;
   }
 
