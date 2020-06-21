@@ -1,3 +1,10 @@
+# Updates
+
+- switched over to TS
+- refactored the discount offers logic
+- added tests
+- removed index.js
+
 # Greenly Take-Home Test Specification
 
 You are a new developer in the Greenly team, and your first job is to add a feature to an old existing piece of code.
