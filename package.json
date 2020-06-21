@@ -10,7 +10,7 @@
     "node": ">=12.x"
   },
   "scripts": {
-    "lint": "eslint .",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "build-test-skip-check": "babel ./src --out-dir lib --extensions .ts --copy-files --source-maps",
     "build-prod-skip-check": "babel ./src --out-dir lib --extensions \".ts,.json\"  --ignore '**/*.test.ts'",
     "build": "tsc",
@@ -35,6 +35,7 @@
     "jest": "24.8.0",
     "prettier": "^1.14.3",
     "tslint": "^6.1.2",
+    "tslint-config-airbnb": "^5.11.2",
     "typescript": "^3.9.5"
   },
   "moduleFileExtensions": [

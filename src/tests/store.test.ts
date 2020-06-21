@@ -8,7 +8,7 @@ let customOffers: DiscountOffer[];
 
 function getOffersAfterDays(daysCount: number, store: Store): DiscountOffer[] {
   let res: DiscountOffer[] = [];
-  for(let i = 0; i < daysCount; i++) {
+  for (let i = 0; i < daysCount; i++) {
     res = store.updateDiscounts();
   }
   return res;
@@ -19,8 +19,8 @@ describe("Store", () => {
     store = new Store();
     standardOffer = new DiscountOffer("test", 1, 2);
     customOffers = [
-      new DiscountOffer(EPartners.ILEK, 2, 3)
-    ]
+      new DiscountOffer(EPartners.ILEK, 2, 3),
+    ];
   });
   it("should test the default decrease of discount and expiresIn", () => {
     store.addDiscountOffers([standardOffer]);
@@ -38,11 +38,11 @@ describe("Store", () => {
     let discountTooBigErrThrown = false;
     try {
       store.addDiscountOffers([new DiscountOffer("test", 2, 52)]);
-    } catch(err) {
+    } catch (err) {
       discountTooBigErrThrown = true;
     }
     expect(discountTooBigErrThrown).toEqual(true);
-    
+
     const increasingOffer = new DiscountOffer(EPartners.NATURALIA, 0, 50);
     store.addDiscountOffers([increasingOffer]);
     const offersDiscountPossiblyOverMax = store.updateDiscounts();
@@ -53,23 +53,23 @@ describe("Store", () => {
   it("should test that custom discounts percentages don't go below minimum or above maximum", () => {
     const increasingOffers: DiscountOffer[] = [
       new DiscountOffer(EPartners.NATURALIA, 50, 49),
-      new DiscountOffer(EPartners.VINTED, 10, 49)
+      new DiscountOffer(EPartners.VINTED, 10, 49),
     ];
 
     const decreasingOffers: DiscountOffer[] = [
       new DiscountOffer(EPartners.VINTED, 50, 1),
-      new DiscountOffer(EPartners.BACKMARKET, 50, 1)
+      new DiscountOffer(EPartners.BACKMARKET, 50, 1),
     ];
 
     const increasingOffersUnderMax: DiscountOffer[] = [
       new DiscountOffer(EPartners.NATURALIA, 47, 50),
-      new DiscountOffer(EPartners.VINTED, 7, 50)
+      new DiscountOffer(EPartners.VINTED, 7, 50),
     ];
 
     const decreasingOffersAboveMin: DiscountOffer[] = [
       new DiscountOffer(EPartners.VINTED, 47, 0),
-      new DiscountOffer(EPartners.BACKMARKET, 47, 0)
-    ]
+      new DiscountOffer(EPartners.BACKMARKET, 47, 0),
+    ];
     store.addDiscountOffers([...increasingOffers, ...decreasingOffers]);
 
     const offersPossibleBeyondLimits = getOffersAfterDays(3, store);
@@ -110,7 +110,7 @@ describe("Store", () => {
     const offersAfterSecondInterval = getOffersAfterDays(5, store);
     const expectedOfferAfterSecondInterval = new DiscountOffer(EPartners.VINTED, 6, 10);
     expect(offersAfterSecondInterval).toEqual([expectedOfferAfterSecondInterval]);
-  
+
     const offersAfterThirdInterval = getOffersAfterDays(6, store);
     const expectedOfferAfterThirdInterval = new DiscountOffer(EPartners.VINTED, 0, 28);
     expect(offersAfterThirdInterval).toEqual([expectedOfferAfterThirdInterval]);
@@ -128,7 +128,7 @@ describe("Store", () => {
     const expectedOfferBeforeExpiration = new DiscountOffer(EPartners.BACKMARKET, 0, 9);
     getOffersAfterDays(2, store);
     expect([backmarketOffer]).toEqual([expectedOfferBeforeExpiration]);
-    
+
     const expectedOfferAfterExpiration = new DiscountOffer(EPartners.BACKMARKET, -2, 1);
     getOffersAfterDays(2, store);
     expect([backmarketOffer]).toEqual([expectedOfferAfterExpiration]);
@@ -140,14 +140,15 @@ describe("Store", () => {
       new DiscountOffer("Velib", 20, 30),
       new DiscountOffer("Naturalia", 10, 5),
       new DiscountOffer("Vinted", 5, 40),
-      new DiscountOffer("Ilek", 15, 40)
+      new DiscountOffer("Ilek", 15, 40),
     ]);
     const newLogs: DiscountOffer[][] = [];
-  
+
     for (let elapsedDays = 0; elapsedDays < 30; elapsedDays++) {
       newLogs.push(JSON.parse(JSON.stringify(store.updateDiscounts()))); // poor man's reference breaker
     }
-    const newLogsString = JSON.stringify(newLogs); // stringify it so we get rid of object naming (according to their class) when doing comparison  
+    // stringify it so we get rid of object naming (according to their class) when doing comparison
+    const newLogsString = JSON.stringify(newLogs);
     expect(newLogsString).toStrictEqual(oldLogsString);
   });
 });

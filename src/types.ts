@@ -2,8 +2,8 @@ export enum EPartners {
   NATURALIA = 'Naturalia',
   ILEK = 'Ilek',
   VINTED = 'Vinted',
-  BACKMARKET = 'Backmkarket'
-};
+  BACKMARKET = 'Backmkarket',
+}
 
 export interface IDiscountOffer {
   partnerName: string;
@@ -17,7 +17,7 @@ export interface IDiscountOfferWithModifiers extends IDiscountOffer {
 
 export type TPartial<T> = {
   [P in keyof T]?: T[P];
-}
+};
 
 export interface IWrappedDiscountModifierParamsBase {
   amount: number;

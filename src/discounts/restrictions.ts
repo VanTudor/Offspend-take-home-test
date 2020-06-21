@@ -11,5 +11,5 @@ function maximum(value: number): number {
 
 export const restrictions = [
   minimum,
-  maximum
+  maximum,
 ];

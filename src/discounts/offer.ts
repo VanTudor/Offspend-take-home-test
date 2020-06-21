@@ -12,11 +12,11 @@ export class DiscountOffer implements IDiscountOffer {
     this.discountInPercent = discountRateInPercent;
 
     if (discountRateInPercent > 50) {
-      throw new Error(`Cannot create new discount offer. discountRateInPercent should be lower than 50. ${this.getErrorDumpConstructorValues()}`)
+      throw new Error(`Cannot create new discount offer. discountRateInPercent should be lower than 50. ${this.getErrorDumpConstructorValues()}`);
     }
   }
 
   private getErrorDumpConstructorValues(): string {
     return `partnerName: ${this.partnerName}, expiresIn: ${this.expiresIn}, discountRateInPercent: ${this.discountInPercent}`;
-  };
+  }
 }
