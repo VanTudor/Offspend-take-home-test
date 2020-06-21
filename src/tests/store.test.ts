@@ -70,14 +70,15 @@ describe("Store", () => {
       new DiscountOffer(EPartners.VINTED, 47, 0),
       new DiscountOffer(EPartners.BACKMARKET, 47, 0)
     ]
-
     store.addDiscountOffers([...increasingOffers, ...decreasingOffers]);
+
     const offersPossibleBeyondLimits = getOffersAfterDays(3, store);
     expect(offersPossibleBeyondLimits).toEqual([...increasingOffersUnderMax, ...decreasingOffersAboveMin]);
   });
 
   it("should test Naturalia's custom discount", () => {
     store.addDiscountOffers([new DiscountOffer(EPartners.NATURALIA, 2, 3)]);
+
     const offersAfterUpdate = store.updateDiscounts();
     const expectedOffersAfterUpdate = [new DiscountOffer(EPartners.NATURALIA, 1, 4)];
     expect(expectedOffersAfterUpdate).toEqual(offersAfterUpdate);

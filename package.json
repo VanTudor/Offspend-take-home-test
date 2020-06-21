@@ -13,8 +13,7 @@
     "lint": "eslint .",
     "build-test-skip-check": "babel ./src --out-dir lib --extensions .ts --copy-files --source-maps",
     "build-prod-skip-check": "babel ./src --out-dir lib --extensions \".ts,.json\"  --ignore '**/*.test.ts'",
-    "build-test": "tsc",
-    "build-prod": "tsc",
+    "build": "tsc",
     "test": "yarn build-test-skip-check && jest --coverage"
   },
   "devDependencies": {
