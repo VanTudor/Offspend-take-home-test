@@ -15,8 +15,7 @@
     "build-prod-skip-check": "babel ./src --out-dir lib --extensions \".ts,.json\"  --ignore '**/*.test.ts'",
     "build-test": "tsc",
     "build-prod": "tsc",
-    "start": "babel-node ./lib/index.js",
-    "test": "yarn build-test-skip-check && jest"
+    "test": "yarn build-test-skip-check && jest --coverage"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.0",

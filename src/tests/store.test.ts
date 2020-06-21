@@ -1,6 +1,5 @@
 import { Store } from "../store";
-import { DiscountOffer } from "../discountOffer";
-import { simulate30DaysOldDiscounts } from "../simulate";
+import { DiscountOffer } from "../discounts/offer";
 import { EPartners } from "../types";
 
 let store: Store;
@@ -92,6 +91,7 @@ describe("Store", () => {
     const ilekInitialOffer = new DiscountOffer(EPartners.ILEK, 1, 30);
     const ilekOffer = new DiscountOffer(EPartners.ILEK, 1, 30);
     store.addDiscountOffers([ilekOffer]);
+
     const offersAfterSomeDays = getOffersAfterDays(20, store);
     expect(offersAfterSomeDays).toEqual([ilekInitialOffer]);
   });
@@ -118,13 +118,35 @@ describe("Store", () => {
     const offersAfterExpiration = store.updateDiscounts();
     const expectedOfferAfterExpiration = new DiscountOffer(EPartners.VINTED, -1, 0);
     expect(offersAfterExpiration).toEqual([expectedOfferAfterExpiration]);
-
   });
 
-  it("should check the raw discount simulation is valid", async () => {
-    const oldVersionOutput = JSON.stringify(require("./res/oldVersionOutput.json"));
-    const simulationResString = JSON.stringify(simulate30DaysOldDiscounts()); // stringify it so we get rid of object naming (according to their class) when doing comparison  
-    expect(simulationResString).toStrictEqual(oldVersionOutput);
+  it("sohuld test Backmarket's custom discount", async () => {
+    const backmarketOffer = new DiscountOffer(EPartners.BACKMARKET, 2, 13);
+    store.addDiscountOffers([backmarketOffer]);
+
+    const expectedOfferBeforeExpiration = new DiscountOffer(EPartners.BACKMARKET, 0, 9);
+    getOffersAfterDays(2, store);
+    expect([backmarketOffer]).toEqual([expectedOfferBeforeExpiration]);
+    
+    const expectedOfferAfterExpiration = new DiscountOffer(EPartners.BACKMARKET, -2, 1);
+    getOffersAfterDays(2, store);
+    expect([backmarketOffer]).toEqual([expectedOfferAfterExpiration]);
   });
 
+  it("should check the raw discount simulation has the same output as the old version", async () => {
+    const oldLogsString = JSON.stringify(require("./res/oldVersionSimulationOutput.json"));
+    store.addDiscountOffers([
+      new DiscountOffer("Velib", 20, 30),
+      new DiscountOffer("Naturalia", 10, 5),
+      new DiscountOffer("Vinted", 5, 40),
+      new DiscountOffer("Ilek", 15, 40)
+    ]);
+    const newLogs: DiscountOffer[][] = [];
+  
+    for (let elapsedDays = 0; elapsedDays < 30; elapsedDays++) {
+      newLogs.push(JSON.parse(JSON.stringify(store.updateDiscounts()))); // poor man's reference breaker
+    }
+    const newLogsString = JSON.stringify(newLogs); // stringify it so we get rid of object naming (according to their class) when doing comparison  
+    expect(newLogsString).toStrictEqual(oldLogsString);
+  });
 });

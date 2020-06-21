@@ -1,4 +1,4 @@
-import { IDiscountOffer } from "./types";
+import { IDiscountOffer } from "../types";
 
 // have it implement a separate interface in Types.ts so we don't run into circular imports later
 export class DiscountOffer implements IDiscountOffer {

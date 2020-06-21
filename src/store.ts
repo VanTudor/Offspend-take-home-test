@@ -1,6 +1,6 @@
-import { DiscountOffer } from "./discountOffer";
+import { DiscountOffer } from "./discounts/offer";
 import { EPartners, TDiscountModifier, TPartnerMap } from "./types";
-import { discountModifiers as dm } from "./discountTypes";
+import { discountModifiers as dm } from "./discounts/types";
 
 export class Store {
   public static partnerDiscountTypesMap: TPartnerMap<TDiscountModifier[]> = {
